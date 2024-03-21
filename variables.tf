@@ -33,21 +33,6 @@ variable "bucket_region" {
   type        = string
 }
 
-# variable "istio_namespace_gateway" {
-#   description = "Espacio de trabajo para el gateway de Istio"
-#   type        = string
-# }
-
-# variable "istio_namespace" {
-#   description = "Espacio de trabajo para los recursos de Istio"
-#   type        = string
-# }
-
-# variable "istio_version" {
-#   description = "Versión de istio"
-#   type        = string
-# }
-
 variable "lb_ssl_ports" {
   description = "Puertos SSL para el Load Balancer"
   type        = string
