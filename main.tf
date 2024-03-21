@@ -55,7 +55,7 @@ locals {
 
 # Recupera la información de las subnets privadas existentes a partir de los IDs generados en 'var.subnets_id'
 data "aws_subnet" "module_subnet" {
-  for_each = local.subnets_id
+  for_each = toset(local.subnets_id)
   id       = each.value
 }
 
