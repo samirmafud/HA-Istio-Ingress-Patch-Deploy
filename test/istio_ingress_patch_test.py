@@ -64,6 +64,6 @@ def test_load_balancer_patch(terraform_output):
     assert "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: 3600" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-internal: true" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:533267162190:certificate/5870c022-e6e6-4b86-ba80-299b7314be25" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-ports: 443" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0fad6edde9b8cde59,subnet-0585bf6783ec9d761" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-type: nlb" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
