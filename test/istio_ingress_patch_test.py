@@ -25,9 +25,9 @@ def terraform_output():
     tf.destroy(tf_var_file="test-vars.tfvars",auto_approve=True)
 
 # Verifica la instalación del parche en el Load Balancer
-def test_istio_base_creation(terraform_output):
+def test_load_balancer_patch(terraform_output):
     # Declara el nombre del Namespace
-    name_space = "istio-system"
+    name_space = "istio-ingress"
 
     # Declara el nombre del servicio
     svc = "istio-ingressgateway"
