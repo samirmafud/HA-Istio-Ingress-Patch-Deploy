@@ -51,6 +51,15 @@ def test_load_balancer_patch(terraform_output):
     # Declara el nombre del servicio
     svc = "istio-ingressgateway"
 
+    # Declara los parámetros que se configuran en el Load Balancer
+    backend_protocol = "tcp"
+    idle_timeout = "3600"
+    internal = "true"
+    ssl_cert = "arn:aws:acm-pca:us-east-1:533267162190:certificate-authority/ed2c30f4-a744-42de-b678-d395095c3ff9/certificate/4eb91756ec4a0ede39f4fa6771a77029"
+    ssl_ports = "443"
+    subnets = "subnet-0fad6edde9b8cde59,subnet-0585bf6783ec9d761"
+    type = "nlb"
+
     # Ejecuta el comando para actualizar el kubeconfig del clúster de EKS
     update_kubeconfig_cmd = f"aws eks update-kubeconfig --name {CLUSTER_NAME} --region {AWS_REGION} --profile {PROFILE}"
     subprocess.run(update_kubeconfig_cmd, shell=True, check=True)
@@ -63,7 +72,7 @@ def test_load_balancer_patch(terraform_output):
     assert "service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: 3600" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-internal: true" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:533267162190:certificate/5870c022-e6e6-4b86-ba80-299b7314be25" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm-pca:us-east-1:533267162190:certificate-authority/ed2c30f4-a744-42de-b678-d395095c3ff9/certificate/4eb91756ec4a0ede39f4fa6771a77029" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-ssl-ports: 443" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0fad6edde9b8cde59,subnet-0585bf6783ec9d761" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert "service.beta.kubernetes.io/aws-load-balancer-type: nlb" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"

@@ -5,7 +5,7 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
-     kubernetes = {
+    kubernetes = {
       source  = "hashicorp/kubernetes"
       version = "~> 2.0"
     }
@@ -50,7 +50,7 @@ data "terraform_remote_state" "ntw_out" {
 
 locals {
   cluster_name = data.terraform_remote_state.eks_out.outputs.cluster_name
-  subnets_id    = [for subnet_name, subnet_id in data.terraform_remote_state.ntw_out.outputs.subnets_id : subnet_id if can(regex("^(eks-a|eks-b)$", subnet_name))]
+  subnets_id   = [for subnet_name, subnet_id in data.terraform_remote_state.ntw_out.outputs.subnets_id : subnet_id if can(regex("^(eks-a|eks-b)$", subnet_name))]
 }
 
 # Recupera la información de las subnets privadas existentes a partir de los IDs generados en 'var.subnets_id'

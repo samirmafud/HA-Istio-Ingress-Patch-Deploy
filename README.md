@@ -14,7 +14,7 @@ La configuración de Terraform ejecuta la aplicación de un parche al servicio i
 
 - Automatiza la actualización del kubeconfig para el clúster de EKS.
 
-- Aplica parches al servicio 'istio-ingressgateway` para configurar el Load Balancer en el clúster de EKS.
+- Aplica parches al servicio 'istio-ingressgateway` para configurar el Load Balancer en el clúster de EKS e integrar el certificado generado en el Cert Manager.
 
 ## Uso
 
@@ -57,11 +57,13 @@ Si el plan es correcto, aplicar y aceptar la creación de los recursos.
 bash
 Copy code
 $ terraform apply -var-file="<archivo-variables>"
-Variables de entrada
+
+## Variables-de-entrada
+
 Las variables de entrada utilizadas en el código incluyen:
 
-aws_region: La región de AWS donde desea desplegar el parche.
-profile: Nombre del perfil para el despliegue de la infraestructura.
+- aws_region: La región de AWS donde desea desplegar el parche.
+- profile: Nombre del perfil para el despliegue de la infraestructura.
 bucket: Nombre del Bucket de S3 donde está el estado de Terraform.
 eks_tfstate_key: Llave del bucket S3 donde está el estado de Terraform para el EKS.
 ntw_tfstate_key: Llave del bucket S3 donde está el estado de Terraform para el Networking.
