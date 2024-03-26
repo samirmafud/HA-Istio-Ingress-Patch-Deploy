@@ -25,7 +25,7 @@ def terraform_output():
     tf.destroy(tf_var_file="test-vars.tfvars",auto_approve=True)
 
 # Verifica el estado del Load Balancer
-def test_load_balancer_patch(terraform_output):
+def test_load_balancer_status(terraform_output):
     # Declara el nombre del Namespace
     name_space = "istio-ingress"
 
