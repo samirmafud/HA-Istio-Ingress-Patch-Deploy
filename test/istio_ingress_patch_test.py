@@ -60,10 +60,10 @@ def test_load_balancer_patch(terraform_output):
     result = subprocess.run(cmd, shell=True, text=True, capture_output=True)
 
     # Verifica que el parche se haya aplicado correctamente en los servicios indicados
-    assert "service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: 3600" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-internal: true" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:533267162190:certificate/5870c022-e6e6-4b86-ba80-299b7314be25" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-ports: https" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0fad6edde9b8cde59,subnet-0585bf6783ec9d761" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
-    assert "service.beta.kubernetes.io/aws-load-balancer-type: nlb" in result.stdout, f"El Load Balancer en {name_space} no está corriendo. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: 3600" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-internal: true" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:533267162190:certificate/5870c022-e6e6-4b86-ba80-299b7314be25" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-ssl-ports: 443" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0fad6edde9b8cde59,subnet-0585bf6783ec9d761" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
+    assert "service.beta.kubernetes.io/aws-load-balancer-type: nlb" in result.stdout, f"El servicio en {name_space} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
