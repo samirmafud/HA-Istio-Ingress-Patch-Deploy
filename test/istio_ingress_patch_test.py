@@ -15,15 +15,6 @@ def terraform_output():
     yield tf.output()
     tf.destroy(tf_var_file="test-vars.tfvars",auto_approve=True)
 
-# Define el nombre del clúster como una variable global
-CLUSTER_NAME = terraform_output['cluster_name']
-
-# Define la región de AWS como una variable global
-AWS_REGION = terraform_output['aws_region']
-
-# Define el perfil como una variable global
-PROFILE = terraform_output['profile']
-
 # Declara el nombre del Namespace como una variable global
 NAME_SPACE = "istio-ingress"
 
@@ -32,6 +23,15 @@ SVC = "istio-ingressgateway"
 
 # Verifica el estado del Load Balancer
 def test_load_balancer_status(terraform_output):
+
+    # Define el nombre del clúster
+    CLUSTER_NAME = terraform_output['cluster_name']
+
+    # Define la región de AWS
+    AWS_REGION = terraform_output['aws_region']
+
+    # Define el perfil
+    PROFILE = terraform_output['profile']
 
     # Ejecuta el comando para actualizar el kubeconfig del clúster de EKS
     update_kubeconfig_cmd = f"aws eks update-kubeconfig --name {CLUSTER_NAME} --region {AWS_REGION} --profile {PROFILE}"
@@ -46,6 +46,15 @@ def test_load_balancer_status(terraform_output):
 
 # Verifica la instalación del parche en el Load Balancer
 def test_load_balancer_patch(terraform_output):
+
+    # Define el nombre del clúster
+    CLUSTER_NAME = terraform_output['cluster_name']
+
+    # Define la región de AWS
+    AWS_REGION = terraform_output['aws_region']
+
+    # Define el perfil
+    PROFILE = terraform_output['profile']
 
     # Declara los parámetros que se configuran en el Load Balancer
     backend_protocol = "tcp"
