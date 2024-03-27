@@ -42,3 +42,13 @@ variable "lb_ssl_cert" {
   description = "ARN del Certificado de Autoridad para el Load Balancer"
   type        = string
 }
+
+variable "istio_namespace" {
+  description = "Espacio de trabajo para los recursos de Istio"
+  type        = string
+}
+
+variable "istio_service_gateway" {
+  description = "Servicio de Istio para el istio-ingressgateway"
+  type        = string
+}
