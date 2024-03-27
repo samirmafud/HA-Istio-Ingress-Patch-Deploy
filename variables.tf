@@ -43,7 +43,7 @@ variable "lb_ssl_cert" {
   type        = string
 }
 
-variable "istio_namespace" {
+variable "istio_namespace_gateway" {
   description = "Espacio de trabajo para los recursos de Istio"
   type        = string
 }

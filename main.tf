@@ -70,7 +70,7 @@ resource "null_resource" "configure_kubectl" {
 resource "null_resource" "patch_deployment" {
   provisioner "local-exec" {
     command = <<-EOT
-      kubectl -n ${var.istio_namespace} patch service ${var.istio_service_gateway} --patch '{
+      kubectl -n ${var.istio_namespace_gateway} patch service ${var.istio_service_gateway} --patch '{
         "metadata": {
           "annotations": {
             "service.beta.kubernetes.io/aws-load-balancer-backend-protocol": "tcp",

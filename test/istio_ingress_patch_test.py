@@ -10,16 +10,10 @@ FIXTURES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 @pytest.fixture(scope="module", autouse=True)
 def terraform_output():
     tf = tftest.TerraformTest(FIXTURES_DIR)
-    tf.setup(workspace_name="dev")
+    tf.setup(workspace_name="test")
     tf.apply(tf_var_file="test-vars.tfvars")
     yield tf.output()
     tf.destroy(tf_var_file="test-vars.tfvars",auto_approve=True)
-
-# Declara el nombre del Namespace como una variable global
-NAME_SPACE = "istio-ingress"
-
-# Declara el nombre del servicio como una variable global
-SVC = "istio-ingressgateway"
 
 # Verifica el estado del Load Balancer
 def test_load_balancer_status(terraform_output):
@@ -32,6 +26,12 @@ def test_load_balancer_status(terraform_output):
 
     # Define el perfil
     PROFILE = terraform_output['profile']
+
+    # Define el espacio de trabajo de Istio
+    NAME_SPACE = terraform_output['istio_namespace_gateway']
+
+    # Define el nombre del servicio del Load Balancer
+    SVC = terraform_output['istio_service_gateway']
 
     # Ejecuta el comando para actualizar el kubeconfig del clúster de EKS
     update_kubeconfig_cmd = f"aws eks update-kubeconfig --name {CLUSTER_NAME} --region {AWS_REGION} --profile {PROFILE}"
@@ -55,6 +55,12 @@ def test_load_balancer_patch(terraform_output):
 
     # Define el perfil
     PROFILE = terraform_output['profile']
+
+    # Define el espacio de trabajo de Istio
+    NAME_SPACE = terraform_output['istio_namespace_gateway']
+
+    # Define el nombre del servicio del Load Balancer
+    SVC = terraform_output['istio_service_gateway']
 
     # Declara los parámetros que se configuran en el Load Balancer
     backend_protocol = "tcp"

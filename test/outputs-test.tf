@@ -27,3 +27,13 @@ output "lb_ssl_cert" {
   description = "ARN del Certificado de Autoridad para el Load Balancer"
   value       = var.lb_ssl_cert
 }
+
+output "istio_namespace_gateway" {
+  description = "Espacio de trabajo para los recursos de Istio"
+  value       = var.istio_namespace_gateway
+}
+
+output "istio_service_gateway" {
+  description = "Servicio de Istio para el istio-ingressgateway"
+  value       = var.istio_service_gateway
+}
