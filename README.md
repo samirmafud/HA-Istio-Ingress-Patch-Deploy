@@ -9,6 +9,7 @@ La configuración de Terraform ejecuta la aplicación de un parche al servicio i
 - [Recursos Creados](#recursos-creados)
 - [Dependencias](#dependencias)
 - [Consideraciones](#consideraciones)
+- [Pruebas](#pruebas)
 
 ## Características
 
