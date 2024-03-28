@@ -48,6 +48,7 @@ data "terraform_remote_state" "ntw_out" {
   }
 }
 
+# Define las variables locales correspondientes al nombre del clúster de EKS y los ids de las subnets asociadas al clúster de EKS
 locals {
   cluster_name = data.terraform_remote_state.eks_out.outputs.cluster_name
   subnets_id   = [for subnet_name, subnet_id in data.terraform_remote_state.ntw_out.outputs.subnets_id : subnet_id if can(regex("^(eks-a|eks-b)$", subnet_name))]
