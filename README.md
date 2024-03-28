@@ -19,7 +19,7 @@ La configuración de Terraform ejecuta la aplicación de un parche al servicio i
 
 - Automatiza la actualización del kubeconfig para el clúster de EKS.
 
-- Aplica un parche al servicio 'istio-ingressgateway` para configurar el Load Balancer en el clúster de EKS e integrar el certificado generado para Istio.
+- Aplica un parche al servicio 'istio-ingressgateway' para configurar el Load Balancer en el clúster de EKS e integrar el certificado generado para Istio.
 
 ## Uso
 
@@ -46,7 +46,7 @@ $ cd <nombre-del-directorio>
 
 - Se deben especificar correctamente los valores del bucket S3 donde estará almacenado el estado de Terraform .tfstate de este módulo en el archivo 'backend.tf'.
 
-Una vez se completa con lo anterior, se ejecuta el comando para inicializar el provedor y la configuración del backend.
+Una vez se completa con lo anterior, se ejecuta el comando para inicializar el proveedor y la configuración del backend.
 
 ```bash
 $ terraform init
@@ -55,19 +55,19 @@ $ terraform init
 Después se selecciona el workspace de Terraform en el cual se esté trabajando.
 
 ```bash
-$ terraform workspace select nombre_del_workspace
+$ terraform workspace select <nombre_del_workspace>
 ```
 
 En caso de que no exista el workspace seleccionado, se debe crear con el siguiente comando.
 
 ```bash
-$ terraform workspace new nombre_del_workspace
+$ terraform workspace new <nombre_del_workspace>
 ```
 
 Posteriormente, se ejecuta el plan y se verifica el mismo, para asegurar la creación de la configuración deseada para cada uno de los recursos.
 
 ```bash
-$ terraform plan -var-file="<archivo de los valores de la configuración>" -var "profile=<iniciativa de Unity>" -out=plan
+$ terraform plan -var-file="<archivo .tfvars de los valores de la configuración>" -var "profile=<iniciativa de Unity>" -out=plan
 ```
 
 Si la información proporcionada por el plan es correcta, se aplica y acepta para la creación de los recursos.
@@ -111,7 +111,7 @@ El despliegue de Terraform crea los siguientes recursos en la cuenta de AWS:
 
 - Configura el proveedor AWS especificando la región y el perfil de AWS.
 
-- Trae el estado remoto de Terraform desde el bucket S3 especificado donde se encuentran el estado remoto del clúster de EKS y de los recursos de red.
+- Trae el estado remoto de Terraform desde el bucket S3 especificado donde se encuentra el estado remoto del clúster de EKS y de los recursos de red.
 
 - Crea un recurso para ejecutar la actualización de la configuración y el contexto del Kubeconfig del clúster de EKS.
 
@@ -132,11 +132,9 @@ Este módulo depende de los siguientes recursos:
 
 ## Consideraciones
 
-- Este código utiliza el módulo de Istio ubicado en el repositorio Unity-Istio-module. Asegúrate de que la URL del módulo sea correcta y esté disponible antes de ejecutar Terraform.
-
 - Asegurar que las subnets a las que se apunta en la variable 'var.subents_id' en el archivo 'main.tf' estén etiquetadas correctamente.
 
-- Asegurar que los valores de las variables definidas en el archivo .tfvars sean correctos. Para este módulo en específico se debe proporcionar el ARN del certificado y se deberá declarar en la variable 'var.lb_ssl_cert'.
+- Asegurar que los valores de las variables definidas en el archivo .tfvars sean correctos. Para este módulo en específico se debe proporcionar el ARN del certificado otorgado pro el equipo de Ciberseguridad de Unity BanCoppel y se deberá declarar en la variable 'var.lb_ssl_cert'.
 
 - Se deben especificar correctamente los valores del bucket S3 donde está almacenado el estado de Terraform .tfstate del clúster de EKS y los recursos de red en las variables 'var.bucket', 'var.eks_tfstate_key', 'var.ntw_tfstate_key', 'var.workspace_key_prefix' y 'var.bucket_region'.
 
@@ -144,12 +142,12 @@ Este módulo depende de los siguientes recursos:
 
 ## Pruebas
 
-Este módulo incorpora pruebas unitarias desarrolladas con `tftest` y `pytest`, las cuales son liberías de `python`. Las pruebas se encuentran en el directorio `test`. Para su ejecución, se deben seguir los siguientes pasos:
+Este módulo incorpora pruebas unitarias desarrolladas con `tftest` y `pytest`, las cuales pertencen a liberías de `python`. Las pruebas se encuentran en el directorio `test`. Para su ejecución, se deben seguir los siguientes pasos:
 
 1. Se debe de navegar hasta el directorio `test` dentro del repositorio.
     ```bash
     cd test
-2. Asegurarse de tener`python` instalado en la máquina donde se llevarán a cabo las pruebas, además de instalar ambas liberias.
+2. Asegurarse de tener`python` instalado en la máquina donde se llevarán a cabo las pruebas, además de instalar las siguientes liberías.
     ```python
       # tftest
       pip install tftest
