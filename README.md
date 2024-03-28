@@ -147,7 +147,7 @@ Este módulo incorpora pruebas unitarias desarrolladas con `tftest` y `pytest`, 
 1. Se debe de navegar hasta el directorio `test` dentro del repositorio.
     ```bash
     cd test
-2. Asegurarse de tener`python` instalado en la máquina donde se llevarán a cabo las pruebas, además de instalar las siguientes liberías.
+2. Asegurarse de tener`python` instalado en la máquina donde se llevarán a cabo las pruebas, además de instalar las siguientes librerías.
     ```python
       # tftest
       pip install tftest
