@@ -21,11 +21,12 @@ La configuración de Terraform ejecuta la aplicación de un parche al servicio i
 
 - Aplica un parche al servicio 'istio-ingressgateway' para configurar el Load Balancer en el clúster de EKS e integrar el certificado generado para Istio.
 
+
 ## Uso
 
 Para poder utilizar este módulo de despliegue y aplicar el parche al servicio Istio, se deben realizar los siguientes puntos:
 
-- Definir las credenciales de la cuenta AWS para poder implementar los recursos y acceder al bucket donde se almacenará el archivo del estado de Terraform .tfstate
+- Definir las credenciales de la cuenta AWS para poder implementar los recursos y acceder al bucket donde se almacenará el archivo del estado de Terraform .tfstate.
 
 - Clonar el repositorio respectivo en el espacio de trabajo donde se realizará el despliegue:
 
@@ -33,7 +34,7 @@ Para poder utilizar este módulo de despliegue y aplicar el parche al servicio I
 $ git clone <URL-del-repositorio>
 ```
 
-- Cambiar al directorio recién creado
+- Cambiar al directorio recién creado.
 
 ```bash
 $ cd <nombre-del-directorio>
@@ -76,6 +77,7 @@ Si la información proporcionada por el plan es correcta, se aplica y acepta par
 $ terraform apply "plan"
 ```
 
+
 ## Variables de entrada
 
 - `aws_region` - La región de AWS a utilizar.
@@ -105,6 +107,7 @@ $ terraform apply "plan"
 
 El código actualmente no produce variables de salida.
 
+
 ## Recursos creados
 
 El despliegue de Terraform crea los siguientes recursos en la cuenta de AWS:
@@ -116,6 +119,7 @@ El despliegue de Terraform crea los siguientes recursos en la cuenta de AWS:
 - Crea un recurso para ejecutar la actualización de la configuración y el contexto del Kubeconfig del clúster de EKS.
 
 - Crea un recurso para ejecutar un parche en el servicio istio-ingressgateway para que el Load Balancer esté configurado y asociado a las subredes del clúster de EKS y al certificado en Istio.
+
 
 ## Dependencias
 
@@ -139,6 +143,7 @@ Este módulo depende de los siguientes recursos:
 - Se deben especificar correctamente los valores del bucket S3 donde está almacenado el estado de Terraform .tfstate del clúster de EKS y los recursos de red en las variables 'var.bucket', 'var.eks_tfstate_key', 'var.ntw_tfstate_key', 'var.workspace_key_prefix' y 'var.bucket_region'.
 
 - Se deben especificar correctamente los valores del bucket S3 donde estará almacenado el estado de Terraform .tfstate de este módulo en el archivo 'backend.tf'.
+
 
 ## Pruebas
 
