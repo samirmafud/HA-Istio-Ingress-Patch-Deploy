@@ -66,7 +66,7 @@ resource "null_resource" "configure_kubectl" {
   }
 }
 
-# Ejecuta un parche en el servicio istio-ingressgateway en el namespace de istio-ingress para configurar el Load Balancer y asociarlo a las subnets del clúster de EKS
+# Ejecuta un parche en el servicio istio-ingressgateway en el namespace especificado para configurar el Load Balancer y asociarlo a las subnets del clúster de EKS
 resource "null_resource" "patch_deployment" {
   provisioner "local-exec" {
     command = <<-EOT
