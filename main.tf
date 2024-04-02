@@ -80,7 +80,6 @@ resource "null_resource" "patch_deployment" {
             "service.beta.kubernetes.io/aws-load-balancer-type": "nlb",
             "service.beta.kubernetes.io/aws-load-balancer-internal": "true",
             "service.beta.kubernetes.io/aws-load-balancer-subnets": "${join(",", local.subnets_id)}",
-            "service.beta.kubernetes.io/aws-load-balancer-ssl-cert": "${var.lb_ssl_cert}"
           }
         }
       }'
