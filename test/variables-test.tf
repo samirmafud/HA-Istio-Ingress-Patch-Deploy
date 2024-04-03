@@ -33,6 +33,16 @@ variable "bucket_region" {
   type        = string
 }
 
+variable "cluster_name" {
+  description = "Nombre del clúster de EKS"
+  type        = string
+}
+
+variable "subnets_id" {
+  description = "ID de los subnets de EKS"
+  type        = set(string)
+}
+
 variable "lb_ssl_ports" {
   description = "Puertos SSL para el Load Balancer"
   type        = string

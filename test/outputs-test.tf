@@ -1,6 +1,6 @@
 output "cluster_name" {
   description = "El nombre del clúster de EKS"
-  value       = local.cluster_name
+  value       = var.cluster_name
 }
 
 output "aws_region" {
@@ -15,7 +15,7 @@ output "profile" {
 
 output "subnets_id" {
   description = "ID de las subnets"
-  value       = join(",", local.subnets_id)
+  value       = join(",", var.subnets_id)
 }
 
 output "lb_ssl_ports" {
