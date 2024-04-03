@@ -66,7 +66,6 @@ def test_load_balancer_patch(terraform_output):
     backend_protocol = "tcp"
     idle_timeout = "3600"
     internal = "true"
-    ssl_cert = terraform_output['lb_ssl_cert']
     ssl_ports = terraform_output['lb_ssl_ports']
     subnets = terraform_output['subnets_id']
     type = "nlb"
@@ -83,7 +82,6 @@ def test_load_balancer_patch(terraform_output):
     assert f"service.beta.kubernetes.io/aws-load-balancer-backend-protocol: {backend_protocol}" in result.stdout, f"El servicio en {NAME_SPACE} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert f"service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: {idle_timeout}" in result.stdout, f"El servicio en {NAME_SPACE} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert f"service.beta.kubernetes.io/aws-load-balancer-internal: {internal}" in result.stdout, f"El servicio en {NAME_SPACE} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
-    assert f"service.beta.kubernetes.io/aws-load-balancer-ssl-cert: {ssl_cert}" in result.stdout, f"El servicio en {NAME_SPACE} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert f"service.beta.kubernetes.io/aws-load-balancer-ssl-ports: {ssl_ports}" in result.stdout, f"El servicio en {NAME_SPACE} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert f"service.beta.kubernetes.io/aws-load-balancer-subnets: {subnets}" in result.stdout, f"El servicio en {NAME_SPACE} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"
     assert f"service.beta.kubernetes.io/aws-load-balancer-type: {type}" in result.stdout, f"El servicio en {NAME_SPACE} no se modificó correctamente. Salida de kubectl:\n{result.stdout}"

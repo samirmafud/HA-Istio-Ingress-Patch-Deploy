@@ -19,7 +19,7 @@ La configuración de Terraform ejecuta la aplicación de un parche al servicio i
 
 - Automatiza la actualización del kubeconfig para el clúster de EKS.
 
-- Aplica un parche al servicio 'istio-ingressgateway' para configurar el Load Balancer en el clúster de EKS e integrar el certificado generado para Istio.
+- Aplica un parche al servicio 'istio-ingressgateway' para configurar el Load Balancer en el clúster de EKS.
 
 
 ## Uso
@@ -41,7 +41,7 @@ $ cd <nombre-del-directorio>
 ```
 - Asegurar que las subnets a las que se apunta en la variable 'var.subents_id' en el archivo 'main.tf' estén etiquetadas correctamente.
 
-- Asegurar que los valores de las variables definidas en el archivo .tfvars sean correctos. Para este módulo en específico se debe proporcionar el ARN del certificado y se deberá declarar en la variable 'lb_ssl_cert'.
+- Asegurar que los valores de las variables definidas en el archivo .tfvars sean correctos.
 
 - Se deben especificar correctamente los valores del bucket S3 donde está almacenado el estado de Terraform .tfstate del clúster de EKS y los recursos de red en las variables 'var.bucket', 'var.eks_tfstate_key', 'var.ntw_tfstate_key', 'var.workspace_key_prefix' y 'var.bucket_region'.
 
@@ -74,7 +74,7 @@ $ terraform plan -var-file="<archivo .tfvars de los valores de la configuración
 Si la información proporcionada por el plan es correcta, se aplica y acepta para la creación de los recursos.
 
 ```bash
-$ terraform apply "plan"
+$ terraform apply plan
 ```
 
 
@@ -100,8 +100,6 @@ $ terraform apply "plan"
 
 - `lb_ssl_ports` - Puertos SSL para el Load Balancer.
 
-- `lb_ssl_cert` - ARN del Certificado de Autoridad para el Load Balancer de Istio.
-
 
 ## Variables de salida
 
@@ -118,7 +116,7 @@ El despliegue de Terraform crea los siguientes recursos en la cuenta de AWS:
 
 - Crea un recurso para ejecutar la actualización de la configuración y el contexto del Kubeconfig del clúster de EKS.
 
-- Crea un recurso para ejecutar un parche en el servicio istio-ingressgateway para que el Load Balancer esté configurado y asociado a las subredes del clúster de EKS y al certificado en Istio.
+- Crea un recurso para ejecutar un parche en el servicio istio-ingressgateway para que el Load Balancer esté configurado y asociado a las subredes del clúster de EKS.
 
 
 ## Dependencias
@@ -131,14 +129,12 @@ Este módulo depende de los siguientes recursos:
 
 - Tener configurados los recursos de Istio ('istio_base', 'istio_d' e 'istio_ingress') en el clúster de EKS obtenidos del módulo Unity-Istio-deploy.
 
-- Se debe declarar el ARN del certificado obtenido por el equipo de ciberseguridad de Unity BanCoppel.
-
 
 ## Consideraciones
 
 - Asegurar que las subnets a las que se apunta en la variable 'var.subents_id' en el archivo 'main.tf' estén etiquetadas correctamente.
 
-- Asegurar que los valores de las variables definidas en el archivo .tfvars sean correctos. Para este módulo en específico se debe proporcionar el ARN del certificado otorgado pro el equipo de Ciberseguridad de Unity BanCoppel y se deberá declarar en la variable 'var.lb_ssl_cert'.
+- Asegurar que los valores de las variables definidas en el archivo .tfvars sean correctos.
 
 - Se deben especificar correctamente los valores del bucket S3 donde está almacenado el estado de Terraform .tfstate del clúster de EKS y los recursos de red en las variables 'var.bucket', 'var.eks_tfstate_key', 'var.ntw_tfstate_key', 'var.workspace_key_prefix' y 'var.bucket_region'.
 

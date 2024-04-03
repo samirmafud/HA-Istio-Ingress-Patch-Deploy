@@ -48,6 +48,7 @@ data "terraform_remote_state" "ntw_out" {
   }
 }
 
+# Define las variables locales correspondientes al nombre del clúster de EKS y los ids de las subnets asociadas al clúster de EKS
 locals {
   cluster_name = data.terraform_remote_state.eks_out.outputs.cluster_name
   subnets_id   = [for subnet_name, subnet_id in data.terraform_remote_state.ntw_out.outputs.subnets_id : subnet_id if can(regex("^(eks-a|eks-b)$", subnet_name))]
@@ -66,7 +67,7 @@ resource "null_resource" "configure_kubectl" {
   }
 }
 
-# Ejecuta un parche en el servicio istio-ingressgateway en el namespace de istio-ingress para configurar el Load Balancer y asociarlo a las subnets del clúster de EKS
+# Ejecuta un parche en el servicio istio-ingressgateway en el namespace especificado para configurar el Load Balancer y asociarlo a las subnets del clúster de EKS
 resource "null_resource" "patch_deployment" {
   provisioner "local-exec" {
     command = <<-EOT
@@ -78,8 +79,7 @@ resource "null_resource" "patch_deployment" {
             "service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout": "3600",
             "service.beta.kubernetes.io/aws-load-balancer-type": "nlb",
             "service.beta.kubernetes.io/aws-load-balancer-internal": "true",
-            "service.beta.kubernetes.io/aws-load-balancer-subnets": "${join(",", local.subnets_id)}",
-            "service.beta.kubernetes.io/aws-load-balancer-ssl-cert": "${var.lb_ssl_cert}"
+            "service.beta.kubernetes.io/aws-load-balancer-subnets": "${join(",", local.subnets_id)}"
           }
         }
       }'
