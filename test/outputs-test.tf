@@ -1,6 +1,6 @@
 output "cluster_name" {
   description = "El nombre del clúster de EKS"
-  value       = var.cluster_name
+  value       = data.terraform_remote_state.eks_out.outputs.cluster_name
 }
 
 output "aws_region" {
@@ -15,7 +15,7 @@ output "profile" {
 
 output "subnets_id" {
   description = "ID de las subnets"
-  value       = join(",", var.subnets_id)
+  value       = join(",", [for subnet_name, subnet_id in data.terraform_remote_state.ntw_out.outputs.subnets_id : subnet_id if can(regex("^(eks-a|eks-b)$", subnet_name))])
 }
 
 output "lb_ssl_ports" {

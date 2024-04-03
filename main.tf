@@ -1,4 +1,4 @@
-# Se especifica la versión del proveedores necesarios para este código.
+# Se especifica la versión de los proveedores necesarios para este código
 terraform {
   required_providers {
     null = {
