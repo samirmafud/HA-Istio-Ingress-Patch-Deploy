@@ -1,4 +1,4 @@
-# Se especifica la versión de los proveedores necesarios para este código
+# Se especifica la versión de los proveedores necesarios
 terraform {
   required_providers {
     null = {
@@ -38,7 +38,7 @@ data "terraform_remote_state" "ntw_out" {
   }
 }
 
-# Ejecuta el módulo Istio para desplegar la Istio en el clúster de EKS
+# Ejecuta el módulo para aplicar el parche en el NLB de Istio y se le proporcionan los valores de las variables
 module "istio_ingress_patch" {
   #source                  = "git::https://github.com/SF-Bancoppel/unity-istio-module.git?ref=feature-istio-module"
   source                  = "git::https://github.com/samirmafud/HA-Istio-Ingress-Patch-Module.git?ref=main"
