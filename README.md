@@ -1,6 +1,6 @@
-# Configuración de Terraform para el despliegue del parche en el Istio Ingress
+# Configuración de Terraform para el despliegue del módulo que configura la actualización del Load Balancer desplegado por ISTIO
 
-La configuración de Terraform ejecuta la aplicación de un parche al servicio istio-ingressgateway en un clúster de EKS para configurar los parámetros necesarios en el Load Balancer de Istio.
+La configuración de Terraform despliega el módulo 'istio-nlb-patch-module' para la iniciativa APOLO, con el objetivo de ejecutar un parche al servicio istio-ingressgateway en un clúster de EKS para actualizar el Load Balancer desplegado por ISTIO hacia un Network Load Balancer con HTTPS.
 
 - [Características](#características)
 - [Uso](#uso)
@@ -13,13 +13,13 @@ La configuración de Terraform ejecuta la aplicación de un parche al servicio i
 
 ## Características
 
-- Configura el proveedor AWS especificando la región y el perfil.
+- Configura el proveedor necesario para este código.
 
 - Recupera el estado remoto de Terraform desde los buckets S3 especificados.
 
 - Automatiza la actualización del kubeconfig para el clúster de EKS.
 
-- Aplica un parche al servicio 'istio-ingressgateway' para configurar el Load Balancer en el clúster de EKS.
+- Aplica un parche al servicio 'istio-ingressgateway' para configurar el Network Load Balancer de Istio con HTTPS en el clúster de EKS.
 
 
 ## Uso
@@ -31,13 +31,13 @@ Para poder utilizar este módulo de despliegue y aplicar el parche al servicio I
 - Clonar el repositorio respectivo en el espacio de trabajo donde se realizará el despliegue:
 
 ```bash
-$ git clone <URL-del-repositorio>
+$ git clone https://github.com/SF-Bancoppel/istio-eks-apolo-nlb-patch
 ```
 
 - Cambiar al directorio recién creado.
 
 ```bash
-$ cd <nombre-del-directorio>
+$ cd istio-eks-apolo-nlb-patch
 ```
 - Asegurar que las subnets a las que se apunta en la variable 'var.subents_id' en el archivo 'main.tf' estén etiquetadas correctamente.
 
@@ -68,7 +68,7 @@ $ terraform workspace new <nombre_del_workspace>
 Posteriormente, se ejecuta el plan y se verifica el mismo, para asegurar la creación de la configuración deseada para cada uno de los recursos.
 
 ```bash
-$ terraform plan -var-file="<archivo .tfvars de los valores de la configuración>" -var "profile=<iniciativa de Unity>" -out=plan
+$ terraform plan -var-file="<archivo .tfvars de los valores de la configuración>" -var "profile=apolo" -out=plan
 ```
 
 Si la información proporcionada por el plan es correcta, se aplica y acepta para la creación de los recursos.
@@ -110,24 +110,22 @@ El código actualmente no produce variables de salida.
 
 El despliegue de Terraform crea los siguientes recursos en la cuenta de AWS:
 
-- Configura el proveedor AWS especificando la región y el perfil de AWS.
+- Crea un recurso nulo para ejecutar la actualización de la configuración y el contexto del Kubeconfig del clúster de EKS.
 
-- Trae el estado remoto de Terraform desde el bucket S3 especificado donde se encuentra el estado remoto del clúster de EKS y de los recursos de red.
+- Crea un recurso nulo para ejecutar un parche en el servicio istio-ingressgateway para que el Load Balancer esté configurado como un NLB con HTTPS en el puerto 443 y asociado a las subredes del clúster de EKS.
 
-- Crea un recurso para ejecutar la actualización de la configuración y el contexto del Kubeconfig del clúster de EKS.
-
-- Crea un recurso para ejecutar un parche en el servicio istio-ingressgateway para que el Load Balancer esté configurado y asociado a las subredes del clúster de EKS.
+- Revierte los cambios si se destruye la infraestructura.
 
 
 ## Dependencias
 
 Este módulo depende de los siguientes recursos:
 
-- Recursos de red desplegados en la cuenta de AWS obtenidos del módulo Unity-Networking-deploy y un bucket S3 donde se almacena el estado de Terraform de este módulo.
+- Recursos de red desplegados en la cuenta de AWS obtenidos del módulo Unity-Networking-Apolo-deploy y un bucket S3 donde se almacena el estado de Terraform de este módulo.
 
-- Un clúster de EKS desplegado en la cuenta de AWS obtenido del módulo Unity-EKS-deploy y un bucket S3 donde se almacena el estado de Terraform de este módulo.
+- Un clúster de EKS desplegado en la cuenta de AWS obtenido del módulo Unity-EKS-Apolo-deploy y un bucket S3 donde se almacena el estado de Terraform de este módulo.
 
-- Tener configurados los recursos de Istio ('istio_base', 'istio_d' e 'istio_ingress') en el clúster de EKS obtenidos del módulo Unity-Istio-deploy.
+- Tener configurados los recursos de Istio ('istio_base', 'istio_d' e 'istio_ingress') en el clúster de EKS obtenidos del módulo istio-eks-apolo-deploy.
 
 
 ## Consideraciones
