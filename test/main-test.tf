@@ -1,4 +1,4 @@
-# Se especifica la versión del proveedores necesarios para este código.
+# Se especifica la versión de los proveedores necesarios para este código
 terraform {
   required_providers {
     null = {
@@ -38,20 +38,14 @@ data "terraform_remote_state" "ntw_out" {
   }
 }
 
-# Define las variables locales
-locals {
-  cluster_name = data.terraform_remote_state.eks_out.outputs.cluster_name
-  subnets_id   = [for subnet_name, subnet_id in data.terraform_remote_state.ntw_out.outputs.subnets_id : subnet_id if can(regex("^(eks-a|eks-b)$", subnet_name))]
-}
-
 # Ejecuta el módulo Istio para desplegar la Istio en el clúster de EKS
 module "istio_ingress_patch" {
   #source                  = "git::https://github.com/SF-Bancoppel/unity-istio-module.git?ref=feature-istio-module"
   source                  = "git::https://github.com/samirmafud/HA-Istio-Ingress-Patch-Module.git?ref=main"
   aws_region              = var.aws_region
   profile                 = var.profile
-  cluster_name            = local.cluster_name
-  subnets_id              = local.subnets_id
+  cluster_name            = data.terraform_remote_state.eks_out.outputs.cluster_name
+  subnets_id              = [for subnet_name, subnet_id in data.terraform_remote_state.ntw_out.outputs.subnets_id : subnet_id if can(regex("^(eks-a|eks-b)$", subnet_name))]
   lb_ssl_ports            = var.lb_ssl_ports
   istio_namespace_gateway = var.istio_namespace_gateway
   istio_service_gateway   = var.istio_service_gateway
